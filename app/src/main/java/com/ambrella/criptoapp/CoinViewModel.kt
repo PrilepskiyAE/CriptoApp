@@ -33,10 +33,7 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
             .repeat()
             .retry()
             .subscribeOn(Schedulers.io())
-            //.observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                //val a = it.data?.map { it.coinInfo?.name }?.joinToString(",")
-                //ApiFactory.apiService.getFullPriceList(fSyms = a.toString())
                 Log.d("TEST_OF_LOADING_DATA", it.toString())
                 db.coinPriceInfoDao().insertPriceList(it)
             }, {

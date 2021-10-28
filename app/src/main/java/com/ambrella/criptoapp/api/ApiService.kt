@@ -10,7 +10,7 @@ interface ApiService {
     @GET("top/totalvolfull")
     fun getTopCoinsInfo(
         @Query(QUERY_PARAM_API_KEY) apiKey:String = "2862ca69ac2063a406adccf3c147ae8442b1b5a597a874e533299f5a95973cc5",
-        @Query(QUERY_PARAM_LIMIT) limit:Int = 10,
+        @Query(QUERY_PARAM_LIMIT) limit:Int = 20,
         @Query(QUERY_PARAM_TO_SIMVOL) tSym:String = CURRENCY
 
     ): Single<CoinInfoListOfData>

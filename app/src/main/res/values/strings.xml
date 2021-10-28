@@ -2,4 +2,9 @@
     <string name="app_name">CriptoApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="StrPrice">\"ЦЕНА:  \"</string>
+    <string name="strMin">\"Минимум за день:    \"</string>
+    <string name="strMax">\"Максимум за день:   \"</string>
+    <string name="strTransaction">\"Последняя сделка: \"</string>
+    <string name="strUpdate">\"Обнавленно: \"</string>
 </resources>
