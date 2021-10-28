@@ -1,60 +1,61 @@
 package com.ambrella.criptoapp.screen
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.ambrella.criptoapp.CoinViewModel
 import com.ambrella.criptoapp.R
+import com.ambrella.criptoapp.adapters.CoinInfoAdapter
+import com.ambrella.criptoapp.databinding.FragmentMainBinding
+import com.ambrella.criptoapp.pojo.CoinPriceInfo
+import kotlinx.android.synthetic.main.fragment_main.*
+import androidx.lifecycle.Observer
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MainFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MainFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    lateinit var binding: FragmentMainBinding
+    private lateinit var viewModel: CoinViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding = FragmentMainBinding.inflate(inflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MainFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    @SuppressLint("FragmentLiveDataObserve")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navController = Navigation.findNavController(view)
+        val adapter= CoinInfoAdapter()
+        adapter.onCoinClicLisener=object : CoinInfoAdapter.OnCoinClicLisener
+        {
+            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
+                navigationFrag(navController, coinPriceInfo.fromsymbol)
+
             }
+
+        }
+        rvCoinPriceList.adapter=adapter
+        viewModel= ViewModelProvider(this) [CoinViewModel::class.java]
+        viewModel.priceList.observe(this@MainFragment, Observer {
+            adapter.coinInfoList= it
+        })
+    }
+
+    private fun navigationFrag(navController: NavController, message:String) {
+
+        findNavController().navigate(R.id.infoFragment, null)
+        val bundle = Bundle()
+        bundle.putString("title1", message)
+        navController.navigate(R.id.infoFragment, bundle)
     }
 }
