@@ -47,16 +47,20 @@ class InfoFragment : Fragment() {
 
             })
         }
-        binding.btdown.setOnClickListener {
-
-            transitionFrag(view,R.id.mainFragment)
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
+//            .setOnClickListener {
+//
+//           // transitionFrag(view,R.id.mainFragment)
+//            findNavController().popBackStack()
+//        }
         }
 
     private fun transitionFrag(view: View,fragnId:Int) {
-        val navController = Navigation.findNavController(view)
+      //  val navController = Navigation.findNavController(view)
         findNavController().navigate(fragnId, null)
-        navController.navigate(fragnId)
+      //  navController.navigate(fragnId)
     }
 }
 

@@ -34,12 +34,13 @@ class MainFragment : Fragment() {
     @SuppressLint("FragmentLiveDataObserve")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navController = Navigation.findNavController(view)
+       // val navController = Navigation.findNavController(view)
+
         val adapter= CoinInfoAdapter()
         adapter.onCoinClicLisener=object : CoinInfoAdapter.OnCoinClicLisener
         {
             override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
-                navigationFrag(navController, coinPriceInfo.fromsymbol)
+                navigationFrag(coinPriceInfo.fromsymbol)
 
             }
 
@@ -51,11 +52,11 @@ class MainFragment : Fragment() {
         })
     }
 
-    private fun navigationFrag(navController: NavController, message:String) {
+    private fun navigationFrag(message:String) {
 
-        findNavController().navigate(R.id.infoFragment, null)
+       // findNavController().navigate(R.id.infoFragment, null)
         val bundle = Bundle()
         bundle.putString("title1", message)
-        navController.navigate(R.id.infoFragment, bundle)
+        findNavController().navigate(R.id.action_mainFragment_to_infoFragment, bundle)
     }
 }
